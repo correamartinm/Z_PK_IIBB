@@ -1,7 +1,265 @@
 <mvc:View controllerName="zpkiibb.zpkiibb.controller.View1"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-        <content />
-    </Page>
+displayBlock="true"
+xmlns:table="sap.ui.table"
+xmlns:html="http://www.w3.org/1999/xhtml"
+xmlns:form="sap.ui.layout.form"
+xmlns:core="sap.ui.core"
+xmlns:u="sap.ui.unified"
+xmlns:mvc="sap.ui.core.mvc"
+xmlns="sap.m">
+<Page id="idView1" title="{i18n>title} {i18n>00caba}" backgroundDesign="Solid" showFooter="false" showHeader="true" showNavButton="true" navButtonPress="" class="sapUiSizeCompact">
+    <content>
+        <NavContainer id="wizardNavContainer">
+            <pages>
+                <Page id="wizardContentPage" showHeader="false">
+                    <content>
+                        <Wizard id="CreateProductWizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content" complete="wizardCompletedHandler">
+
+                            <WizardStep id="carga_fichero" title="{i18n>step1}" validated="true">
+                                <Panel id="panel-padron" expandable="true" expanded="true" headerText="{i18n>padronfichero}">
+                                    <HBox width="100%" alignItems="Center">
+
+                                        <VBox alignItems="Start">
+                                            <Label text="{i18n>padron}" width="120px" labelFor="id-select-padron" />
+                                            <Select id="id-select-padron" selectedKey="{}" width="200px" change="onSelectPadron"/>
+                                        </VBox>
+
+                                        <HBox class="sapUiSmallMarginBegin">
+                                            <RadioButtonGroup id="SelectArchivo" width="120px" selectedIndex="0">
+                                                <RadioButton text="{i18n>servidor}" select=".selectArchivoServer" />
+                                                <RadioButton text="{i18n>local}" select=".selectArchivoLocal"/>
+                                            </RadioButtonGroup>
+                                        </HBox>
+
+                                        <VBox class="sapUiSmallMarginBegin" visible="false" id="id-file-upload">
+                                            <Label text="{i18n>fichero}" labelFor="id-carga-fichero" />
+                                            <u:FileUploader id="id-carga-fichero" 
+                                                            buttonText="{i18n>btnupload}" 
+                                                            style="Emphasized" 
+                                                            placeholder="Elija un archivo" />
+                                        </VBox>
+                                    </HBox>
+
+                                </Panel>
+
+                                <Panel id="panel-parametros" headerText="{i18n>parametros}" expandable="true" expanded="true">
+                                    <HBox >
+
+                                        <VBox alignItems="Start">
+                                            <Label text="{i18n>sociedad}" labelFor="id-selec-sociedad" width="140px" />
+                                            <MultiComboBox id="id-mcb-sociedad-p1" change="onSelectSociedad" width="200px" items="{
+                                                    path: '/Proveedor',
+                                                    sorter: { path: 'Name' }
+                                                }">
+                                                <core:Item key="{ProductId}" text="{Name}" />
+                                            </MultiComboBox>
+                                        </VBox>
+
+                                        <VBox alignItems="Start" class="sapUiTinyMarginBegin">
+                                            <Label text="{i18n>tiporetencion}" labelFor="id-select-retenciones" width="180px" />
+                                            <Select id="id-select-retenciones" selectedKey="{}" width="200px">
+                                            </Select>
+                                        </VBox>
+
+
+                                        <VBox alignItems="Start" class="sapUiTinyMarginBegin">
+                                            <Label text="{i18n>indretencion}" wrapping="true" labelFor="id-busqueda" width="126px" />
+                                            <Select id="id-select-idretencion" selectedKey="{}" width="200px" change="onSelectIdRetencion"/>
+                                        </VBox>
+
+                                    </HBox>
+
+                                    <Button text="{i18n>ejecutar}" id="id-btn-p1" class="sapUiSmallMarginTop" />
+                                </Panel>
+
+                                <Panel id="id-pnl-resultado-p1" headerText="{i18n>resultado}" expandable="true" expanded="false" visible="true">
+
+                                    <table:Table id="id-table-p1" rows="{ path: '/Resultado'}">
+
+                                    <table:Column width="90px">
+                                        <Label text="{i18n>sociedad}" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                    <table:Column width="65px">
+                                        <Label text="{i18n>region}" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                    <table:Column width="65px">
+                                        <Label text="{i18n>idpadron}" wrapping="true" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                    <table:Column width="95px">
+                                        <Label text="{i18n>cuenta}" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                    <table:Column width="95px">
+                                        <Label text="{i18n>nidentificacion}" wrapping="true" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                    <table:Column width="90px">
+                                        <Label text="{i18n>tipoant}" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                    <table:Column width="50px">
+                                        <Label text="{i18n>indant}" wrapping="true" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                    <table:Column width="90px">
+                                        <Label text="{i18n>tiponuevo}" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                    <table:Column width="90px">
+                                        <Label text="{i18n>intnuevo}" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                    <table:Column width="90px">
+                                        <Label text="{i18n>tipomsg}" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                    <table:Column width="90px">
+                                        <Label text="{i18n>idmsg}" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                    <table:Column width="45px">
+                                        <Label text="{i18n>nummsg}" wrapping="true" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                    <table:Column width="210px">
+                                        <Label text="{i18n>txtmsg}" />
+                                        <table:template>
+                                            <Text text="" wrapping="false" />
+                                        </table:template>
+                                    </table:Column>
+                            
+                                </table:Table>
+
+                                </Panel>
+
+                            </WizardStep>
+                            <WizardStep id="actualiza_padron" validated="true" title="{i18n>step2}">
+                                <Panel >
+
+                                    <HBox >
+
+                                        <VBox alignItems="Start">
+                                            <Label text="{i18n>sociedad}" width="120px" />
+                                            <MultiComboBox id="id-mcb-sociedad-p2" change="onSelectSociedad" items="{
+                                                    path: '/Proveedor',
+                                                    sorter: { path: 'Name' }
+                                                }">
+                                                <core:Item key="{ProductId}" text="{Name}" />
+                                            </MultiComboBox>
+                                        </VBox>
+
+                                        <VBox alignItems="Start" class="sapUiTinyMarginBegin">
+                                            <Label text="{i18n>proveedor}" width="120px" />
+                                            <MultiComboBox id="id-mcb-proveedor-p2" change="onSelectProveedor" items="{
+                                                    path: '/Proveedor',
+                                                    sorter: { path: 'Name' }
+                                                }">
+                                                <core:Item key="{ProductId}" text="{Name}" />
+                                            </MultiComboBox>
+
+                                        </VBox>
+
+                                    </HBox>
+
+                                    <Label/>
+                                    <Text text=""/>
+                                    <Button text="{i18n>ejecutar}" id="id-btn-p2" class="sapUiSmallMarginTop" />
+                                </Panel>
+
+                                <Panel id="id-pnl-resultado-p2" headerText="{i18n>resultado}" expandable="true" expanded="false" visible="true">
+                                    
+                                </Panel>
+
+                            </WizardStep>
+                            <WizardStep id="actualiza_partida" validated="false" activate="parametrosActivacion" title="{i18n>step3}">
+                                <Panel >
+
+                                    <HBox >
+
+                                        <VBox alignItems="Start">
+                                            <Label text="{i18n>sociedad}" width="120px" />
+                                            <MultiComboBox id="id-mcb-sociedad-p3" change="onSelectSociedad" items="{
+                                                    path: '/Proveedor',
+                                                    sorter: { path: 'Name' }
+                                                }">
+                                                <core:Item key="{ProductId}" text="{Name}" />
+                                            </MultiComboBox>
+                                        </VBox>
+
+                                        <VBox alignItems="Start" class="sapUiTinyMarginBegin">
+                                            <Label text="{i18n>proveedor}" width="120px" />
+                                            <MultiComboBox id="id-mcb-proveedor-p3" change="onSelectProveedor" items="{
+                                                    path: '/Proveedor',
+                                                    sorter: { path: 'Name' }
+                                                }">
+                                                <core:Item key="{ProductId}" text="{Name}" />
+                                            </MultiComboBox>
+
+                                        </VBox>
+                                    </HBox>
+
+                                    <Label/>
+                                    <Text text=""/>
+                                    <Button text="{i18n>ejecutar}" id="id-btn-p3" class="sapUiSmallMarginTop" />
+                                </Panel>
+
+                                <Panel id="id-pnl-resultado-p3" headerText="{i18n>resultado}" expandable="true" expanded="false" visible="true">
+                                    
+                                </Panel>
+
+
+                            </WizardStep>
+                        </Wizard>
+                    </content>
+                    <footer>
+                        <OverflowToolbar>
+                            <ToolbarSpacer/>
+                            <Button text="Cancel" press="handleWizardCancel"/>
+                        </OverflowToolbar>
+                    </footer>
+                </Page>
+
+            </pages>
+        </NavContainer>
+    </content>
+</Page>
 </mvc:View>
