@@ -15,7 +15,9 @@ builder:
       configuration:
         target:
           url: https://52.20.219.243:8001
-          client: "100"
+        credentials:
+          username: env:MCORREA
+          password: env:martu12345
         app:
           name: ZPK_IIBB
           description: Actualizacion Padrones IIBB
