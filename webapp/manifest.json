@@ -72,7 +72,17 @@
       "": {
         "dataSource": "mainService",
         "preload": true,
-        "settings": {}
+        "type": "sap.ui.model.odata.v2.ODataModel",
+        "settings": {
+            "loadMetadataAsync": false,
+            "json": true,
+            "bJSON": true,
+            "defaultBindingMode": "TwoWay",
+            "defaultCountMode": "None",
+            "useBatch": true,
+            "refreshAfterChange": true,
+            "disableHeadRequestForToken": true
+        }
       }
     },
     "resources": {
