@@ -47,24 +47,48 @@ xmlns="sap.m">
 
                                         <VBox alignItems="Start">
                                             <Label text="{i18n>sociedad}" labelFor="id-selec-sociedad" width="140px" />
-                                            <MultiComboBox id="id-mcb-sociedad-p1" change="onSelectSociedad" width="200px" items="{
-                                                    path: '/Proveedor',
-                                                    sorter: { path: 'Name' }
-                                                }">
-                                                <core:Item key="{ProductId}" text="{Name}" />
+                                            <MultiComboBox id="id-mcb-sociedad-p1" change="onSelectSociedad" width="200px" 
+                                            items="{ path: '/SociedadSet' }"
+                                            >
+                                              <core:Item key="{ProductId}" text="{Name}" />
                                             </MultiComboBox>
                                         </VBox>
 
                                         <VBox alignItems="Start" class="sapUiTinyMarginBegin">
                                             <Label text="{i18n>tiporetencion}" labelFor="id-select-retenciones" width="180px" />
-                                            <Select id="id-select-retenciones" selectedKey="{}" width="200px">
-                                            </Select>
+                                            <Select
+                                                id="id-select-retenciones"
+						                        forceSelection="true"
+                                                width="200px" 
+						                        items="{
+							                        path: '/RetencionSet',
+							                        sorter: { path: 'Name' }
+						                        }">
+            					                    <core:Item key="{ProductId}" text="{Name}" />
+                            				</Select>    
+                                           
+                                            
+                                     
                                         </VBox>
 
 
                                         <VBox alignItems="Start" class="sapUiTinyMarginBegin">
                                             <Label text="{i18n>indretencion}" wrapping="true" labelFor="id-busqueda" width="126px" />
-                                            <Select id="id-select-idretencion" selectedKey="{}" width="200px" change="onSelectIdRetencion"/>
+                                                <Select
+                                                id="id-select-idretencion" 
+                                                width="200px" 
+                                                change="onSelectIdRetencion"
+						                        forceSelection="true"
+						                        items="{
+							                        path: '/IndicadorSet',
+							                        sorter: { path: 'Name' }
+						                        }">
+            					                    <core:Item key="{ProductId}" text="{Name}" />
+                            				</Select>            
+
+
+                                           
+                                           
                                         </VBox>
 
                                     </HBox>
