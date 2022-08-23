@@ -17,7 +17,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/sap/opu/odata/",
+        "uri": "/sap/opu/odata/ZFIOD_IIBB_PADRON_UPLOAD_SRV/",
         "type": "OData",
         "settings": {
           "annotations": [],
