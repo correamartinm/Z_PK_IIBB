@@ -14,7 +14,7 @@ builder:
       afterTask: generateCachebusterInfo
       configuration:
         target:
-          url: https://52.20.219.243:8001
+          url: http://ec2-52-20-219-243.compute-1.amazonaws.com:8000
         credentials:
           username: env:MCORREA
           password: env:martu12345
