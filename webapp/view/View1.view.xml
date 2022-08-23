@@ -15,7 +15,7 @@ xmlns="sap.m">
                     <content>
                         <Wizard id="CreateProductWizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content" complete="wizardCompletedHandler">
 
-                            <WizardStep id="carga_fichero" title="{i18n>step1}" validated="true">
+                            <WizardStep id="carga_fichero" title="{i18n>step1}" validated="true" >
                                 <Panel id="panel-padron" expandable="true" expanded="true" headerText="{i18n>padronfichero}">
                                     <HBox width="100%" alignItems="Center">
 
@@ -35,15 +35,16 @@ xmlns="sap.m">
                                             <Label text="{i18n>fichero}" labelFor="id-carga-fichero" />
                                             <u:FileUploader id="id-carga-fichero" 
                                                             buttonText="{i18n>btnupload}" 
-                                                            style="Emphasized" 
+                                                            style="Emphasized"
+                                                            uploadOnChange="true"
                                                             uploadComplete="onUploadCompleto"                         
-                                                            placeholder="Elija un archivo" />
+                                                            placeholder="{i18n>fileselect}" />
                                         </VBox>
                                     </HBox>
 
                                 </Panel>
 
-                                <Panel id="panel-parametros" headerText="{i18n>parametros}" expandable="true" expanded="true">
+                                <Panel id="panel-parametros" headerText="{i18n>parametros}" expandable="true" expanded="false">
                                     <HBox >
 
                                         <VBox alignItems="Start">
@@ -60,6 +61,7 @@ xmlns="sap.m">
                                             <Select
                                                 id="id-select-retenciones"
 						                        forceSelection="true"
+                                                change="onSelectRetenciones"
                                                 width="200px" 
 						                        items="{
 							                        path: '/RetencionSet',
@@ -86,9 +88,6 @@ xmlns="sap.m">
 						                        }">
             					                    <core:Item key="{ProductId}" text="{Name}" />
                             				</Select>            
-
-
-                                           
                                            
                                         </VBox>
 
@@ -99,7 +98,7 @@ xmlns="sap.m">
 
                                 <Panel id="id-pnl-resultado-p1" headerText="{i18n>resultado}" expandable="true" expanded="false" visible="true">
 
-                                    <table:Table id="id-table-p1" rows="{ path: '/Resultado'}">
+                                    <table:Table id="id-table-p1" rows="{ path: '/Resultado'}" selectionMode="None">
 
                                     <table:Column width="90px">
                                         <Label text="{i18n>sociedad}" />

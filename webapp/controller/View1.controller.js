@@ -39,8 +39,11 @@ sap.ui.define(
         },
 
         onUploadCompleto: function() {
+        this.getView().byId("panel-padron").setExpanded(false);    
+        this.getView().byId("panel-parametros").setExpanded(true);
         var MsgUpload =  this.getView().getModel("i18n").getResourceBundle().getText("msguploadcomplete");
           MessageToast.show(MsgUpload);
+
         },
   
   
