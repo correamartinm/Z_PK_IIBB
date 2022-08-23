@@ -37,6 +37,11 @@ sap.ui.define(
         selectArchivoLocal: function() {
           this.getView().byId("id-file-upload").setVisible(true);
         },
+
+        onUploadCompleto: function() {
+        var MsgUpload =  this.getView().getModel("i18n").getResourceBundle().getText("msguploadcomplete");
+          MessageToast.show(MsgUpload);
+        },
   
   
         parametrosActivacion: function () {

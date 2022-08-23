@@ -36,6 +36,7 @@ xmlns="sap.m">
                                             <u:FileUploader id="id-carga-fichero" 
                                                             buttonText="{i18n>btnupload}" 
                                                             style="Emphasized" 
+                                                            uploadComplete="onUploadCompleto"                         
                                                             placeholder="Elija un archivo" />
                                         </VBox>
                                     </HBox>
@@ -93,7 +94,7 @@ xmlns="sap.m">
 
                                     </HBox>
 
-                                    <Button text="{i18n>ejecutar}" id="id-btn-p1" class="sapUiSmallMarginTop" />
+                                    <Button text="{i18n>ejecutar}" id="id-btn-p1" class="sapUiSmallMarginTop" press="onEjecutar" />
                                 </Panel>
 
                                 <Panel id="id-pnl-resultado-p1" headerText="{i18n>resultado}" expandable="true" expanded="false" visible="true">
