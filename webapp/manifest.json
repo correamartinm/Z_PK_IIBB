@@ -21,7 +21,6 @@
                 "type": "OData",
                 "settings": {
                     "odataVersion": "2.0",
-                    "annotations": [],
                     "localUri": "localService/metadata.xml"
                 }
             }
