@@ -32,6 +32,9 @@ server:
         backend:
           - path: /sap
             url: http://localhost
+          - path: /sap/opu/odata/sap/ZFIOD_IIBB_PADRON_UPLOAD_SRV/
+            url: http://ec2-52-20-219-243.compute-1.amazonaws.com:8000
+            client: '100'
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:

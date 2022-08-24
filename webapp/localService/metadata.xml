@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZFIOD_IIBB_PADRON_UPLOAD_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="Padron" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Padron_Id"/>
+                    <PropertyRef Name="Descripcion"/>
+                </Key>
+                <Property Name="Padron_Id" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Descripcion" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Sociedad" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Sociedad_Id"/>
+                </Key>
+                <Property Name="Sociedad_Id" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Descripcion" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Retencion" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Tipo_Retencion"/>
+                </Key>
+                <Property Name="Tipo_Retencion" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Denominacion" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Indicador" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Indicador_Ret"/>
+                    <PropertyRef Name="Tipo_Retencion"/>
+                </Key>
+                <Property Name="Indicador_Ret" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Denominacion" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Tipo_Retencion" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityContainer Name="ZFIOD_IIBB_PADRON_UPLOAD_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="PadronSet" EntityType="ZFIOD_IIBB_PADRON_UPLOAD_SRV.Padron" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="SociedadSet" EntityType="ZFIOD_IIBB_PADRON_UPLOAD_SRV.Sociedad" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="RetencionSet" EntityType="ZFIOD_IIBB_PADRON_UPLOAD_SRV.Retencion" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="IndicadorSet" EntityType="ZFIOD_IIBB_PADRON_UPLOAD_SRV.Indicador" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <atom:link rel="self" href="http://ec2-52-20-219-243.compute-1.amazonaws.com:8000/sap/opu/odata/sap/ZFIOD_IIBB_PADRON_UPLOAD_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://ec2-52-20-219-243.compute-1.amazonaws.com:8000/sap/opu/odata/sap/ZFIOD_IIBB_PADRON_UPLOAD_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
