@@ -18,11 +18,13 @@
     },
     "scripts": {
         "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#zpkiibbzpkiibb-display\"",
+        "start-dist": "fiori run --open index.html --config ui5-dist.yaml",
+        "start-local": "fiori run --open index.html --config ui5-local.yaml",
         "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
         "deploy": "npm run build && fiori deploy --config ui5-deploy.yaml && rimraf archive.zip",
         "deploy-config": "fiori add deploy-config",
         "zip": "cd dist && npx bestzip ../app.zip *",
-        "startok": "fiori run --open \"index.html?sap-ui-xx-viewCache=false\"",
+        "startok": "fiori run --open index.html",
         "undeploy": "fiori undeploy --config ui5-deploy.yaml",
         "deploy-test": "npm run build && fiori deploy --config ui5-deploy.yaml --testMode true"
     },

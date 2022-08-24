@@ -9,7 +9,7 @@ server:
     - name: fiori-tools-proxy
       afterMiddleware: compression
       configuration:
-        ignoreCertError: true # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
         ui5:
           path:
             - /resources
@@ -19,9 +19,6 @@ server:
           - path: /sap
             url: http://ec2-52-20-219-243.compute-1.amazonaws.com:8000
             client: '100'
-        credentials:
-          username: env:MCORREA
-          password: env:martu12345
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
