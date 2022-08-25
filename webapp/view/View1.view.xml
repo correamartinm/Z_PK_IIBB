@@ -20,14 +20,14 @@
 
                                             <VBox id="_IDGenVBox1" alignItems="Start">
                                                 <Label id="_IDGenLabel1" text="{i18n>padron}" width="120px" labelFor="id-select-padron" />
-                                                <Select id="id-select-padron" width="200px" change="onSelectPadron" items="{ path: '/PadronSet' }">
-                                                    <core:Item id="_IDGenItem1" key="{Padron_Id}" text="{Descripcion}" />
+                                                <Select id="id-select-padron" width="250px" change="onSelectPadron"  items="{/PadronSet}" >
+                                                    <core:Item id="_IDGenItem1" key="{Padron_Id}" text="{Padron_Id} {Descripcion}" />
                                                 </Select>
 
                                             </VBox>
 
                                             <HBox id="_IDGenHBox2" class="sapUiSmallMarginBegin">
-                                                <RadioButtonGroup id="SelectArchivo" width="120px" selectedIndex="0">
+                                                <RadioButtonGroup id="SelectArchivo" width="120px" selectedIndex="0" >
                                                     <RadioButton id="_IDGenRadioButton1" text="{i18n>servidor}" select=".selectArchivoServer" />
                                                     <RadioButton id="_IDGenRadioButton2" text="{i18n>local}" select=".selectArchivoLocal"/>
                                                 </RadioButtonGroup>
@@ -35,9 +35,14 @@
 
                                             <VBox class="sapUiSmallMarginBegin" visible="false" id="id-file-upload">
                                                 <Label id="_IDGenLabel2" text="{i18n>fichero}" labelFor="id-carga-fichero" />
-                                                <u:FileUploader id="id-carga-fichero" buttonText="{i18n>btnupload}" style="Emphasized" uploadOnChange="true" uploadComplete="onUploadCompleto" placeholder="{i18n>fileselect}" />
+                                                <u:FileUploader id="id-carga-fichero" uploadOnChange="false" 
+                                                    uploadUrl="/sap/opu/odata/sap/ZFIOD_IIBB_PADRON_UPLOAD_SRV/ArchivoSet" 
+                                                    buttonText="{i18n>btnupload}" fileType="TXT" multiple="false"
+                                                    style="Emphasized" change="onUploadCompleto" placeholder="{i18n>fileselect}"  />
                                             </VBox>
                                         </HBox>
+
+                                        <Button text="{i18n>upload}" id="id-btn-upload" class="sapUiSmallMarginTop" visible="false" press="onFileupload" />
 
                                     </Panel>
 
@@ -46,29 +51,26 @@
 
                                             <VBox id="_IDGenVBox2" alignItems="Start">
                                                 <Label id="_IDGenLabel3" text="{i18n>sociedad}" labelFor="id-selec-sociedad" width="140px" />
-                                                <MultiComboBox id="id-mcb-sociedad-p1" change="onSelectSociedad" width="200px" items="{ path: '/SociedadSet' }">
-                                                    <core:Item id="_IDGenItem2" key="{Sociedad_Id}" text="{Descripcion}" />
-                                                </MultiComboBox>
+                                                <Select id="id-sociedad-p1" change="onSelectSociedad" width="200px" items="{/SociedadSet}">
+                                                    <core:Item id="_IDGenItem2" key="{Sociedad_Id}" text="{Sociedad_Id} {Descripcion}" />
+                                                </Select>
+
+                                                
                                             </VBox>
 
                                             <VBox id="_IDGenVBox3" alignItems="Start" class="sapUiTinyMarginBegin">
                                                 <Label id="_IDGenLabel4" text="{i18n>tiporetencion}" labelFor="id-select-retenciones" width="180px" />
-                                                <Select id="id-select-retenciones" forceSelection="true" change="onSelectRetenciones" width="200px" items="{
-							                        path: '/RetencionSet',
-							                        sorter: { path: 'Denominacion' }
-						                        }">
-                                                    <core:Item id="_IDGenItem3" key="{Tipo_Retencion}" text="{Denominacion}" />
+                                                <Select id="id-select-retenciones" forceSelection="true" change="onSelectRetenciones" width="200px" items="{/RetencionSet}" >
+                                                    <core:Item id="_IDGenItem3" key="{Tipo_Retencion}" text="{Tipo_Retencion} {Denominacion}" />
                                                 </Select>
 
                                             </VBox>
 
                                             <VBox id="_IDGenVBox4" alignItems="Start" class="sapUiTinyMarginBegin">
                                                 <Label id="_IDGenLabel5" text="{i18n>indretencion}" wrapping="true" labelFor="id-busqueda" width="126px" />
-                                                <Select id="id-select-idretencion" width="200px" change="onSelectIdRetencion" forceSelection="true" items="{
-							                        path: '/IndicadorSet',
-							                        sorter: { path: 'Denominacion' }
-						                        }">
-                                                    <core:Item id="_IDGenItem4" key="{Indicador_Ret}" text="{Tipo_Retencion} {Denominacion}" />
+                                                <Select id="id-select-idretencion" width="200px" change="onSelectIdRetencion" forceSelection="true" 
+                                                items="{/IndicadorSet}">
+                                                    <core:Item id="_IDGenItem4" key="{Indicador_Ret}" text="{Indicador_Ret} {Tipo_Retencion} {Denominacion}" />
                                                 </Select>
 
                                             </VBox>
@@ -80,7 +82,7 @@
 
                                     <Panel id="id-pnl-resultado-p1" headerText="{i18n>resultado}" expandable="true" expanded="false" visible="true">
 
-                                        <table:Table id="id-table-p1" rows="{ path: '/Resultado'}" selectionMode="None">
+                                        <table:Table id="id-table-p1" rows="{/Resultado}" selectionMode="None">
 
                                             <table:Column id="_IDGenColumn1" width="90px">
                                                 <Label id="_IDGenLabel6" text="{i18n>sociedad}" />
@@ -185,22 +187,22 @@
 
                                             <VBox id="_IDGenVBox5" alignItems="Start">
                                                 <Label id="_IDGenLabel19" text="{i18n>sociedad}" width="120px" />
-                                                <MultiComboBox id="id-mcb-sociedad-p2" change="onSelectSociedad" items="{
+                                                <Select id="id-mcb-sociedad-p2" change="onSelectSociedad" items="{
                                                     path: '/Proveedor',
                                                     sorter: { path: 'Name' }
                                                 }">
                                                     <core:Item id="_IDGenItem5" key="{ProductId}" text="{Name}" />
-                                                </MultiComboBox>
+                                                </Select>
                                             </VBox>
 
                                             <VBox id="_IDGenVBox6" alignItems="Start" class="sapUiTinyMarginBegin">
                                                 <Label id="_IDGenLabel20" text="{i18n>proveedor}" width="120px" />
-                                                <MultiComboBox id="id-mcb-proveedor-p2" change="onSelectProveedor" items="{
+                                                <Select id="id-mcb-proveedor-p2" change="onSelectProveedor" items="{
                                                     path: '/Proveedor',
                                                     sorter: { path: 'Name' }
                                                 }">
                                                     <core:Item id="_IDGenItem6" key="{ProductId}" text="{Name}" />
-                                                </MultiComboBox>
+                                                </Select>
 
                                             </VBox>
 
@@ -223,22 +225,22 @@
 
                                             <VBox id="_IDGenVBox7" alignItems="Start">
                                                 <Label id="_IDGenLabel22" text="{i18n>sociedad}" width="120px" />
-                                                <MultiComboBox id="id-mcb-sociedad-p3" change="onSelectSociedad" items="{
+                                                <Select id="id-mcb-sociedad-p3" change="onSelectSociedad" items="{
                                                     path: '/Proveedor',
                                                     sorter: { path: 'Name' }
                                                 }">
                                                     <core:Item id="_IDGenItem7" key="{ProductId}" text="{Name}" />
-                                                </MultiComboBox>
+                                                </Select>
                                             </VBox>
 
                                             <VBox id="_IDGenVBox8" alignItems="Start" class="sapUiTinyMarginBegin">
                                                 <Label id="_IDGenLabel23" text="{i18n>proveedor}" width="120px" />
-                                                <MultiComboBox id="id-mcb-proveedor-p3" change="onSelectProveedor" items="{
+                                                <Select id="id-mcb-proveedor-p3" change="onSelectProveedor" items="{
                                                     path: '/Proveedor',
                                                     sorter: { path: 'Name' }
                                                 }">
                                                     <core:Item id="_IDGenItem8" key="{ProductId}" text="{Name}" />
-                                                </MultiComboBox>
+                                                </Select>
 
                                             </VBox>
                                         </HBox>

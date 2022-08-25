@@ -19,6 +19,7 @@ server:
           - path: /sap
             url: http://ec2-52-20-219-243.compute-1.amazonaws.com:8000
             client: '100'
+            destination: DEV
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

@@ -2,6 +2,7 @@
     "name": "z_pk_iibb",
     "version": "0.0.1",
     "private": true,
+    "sapuxLayer": "CUSTOMER_BASE",
     "description": "A Fiori application.",
     "keywords": [
         "ui5",
@@ -33,6 +34,5 @@
             "@sap/ux-ui5-tooling",
             "ui5-task-flatten-library"
         ]
-    },
-    "sapuxLayer": "CUSTOMER_BASE"
+    }
 }

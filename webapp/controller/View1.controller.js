@@ -14,20 +14,12 @@ sap.ui.define(
           this._oNavContainer = this.byId("wizardNavContainer");
           this._oWizardContentPage = this.byId("wizardContentPage");
   
-          this.model = new JSONModel();
-          this.model.setData({
-            productNameState: "Error",
-            productWeightState: "Error",
-          });
-          this.getView().setModel(this.model);
-          this.model.setProperty("/navApiEnabled", true);
-          this.model.setProperty("/productVAT", false);
         },
   
         //Se selecciona el Archivo del padron del servidor ..............
   
         onSelectPadron: function () {
-          this.getView().byId("panel-ficheros").setVisible(true);
+          this.getView().byId("SelectArchivo").setEnabled(true);
         },
   
         selectArchivoServer: function() {
@@ -38,12 +30,18 @@ sap.ui.define(
           this.getView().byId("id-file-upload").setVisible(true);
         },
 
-        onUploadCompleto: function() {
-        this.getView().byId("panel-padron").setExpanded(false);    
-        this.getView().byId("panel-parametros").setExpanded(true);
-        var MsgUpload =  this.getView().getModel("i18n").getResourceBundle().getText("msguploadcomplete");
-          MessageToast.show(MsgUpload);
+        onEjecutar: function() {
+          var oSociedad= this.getView().byId("id-sociedad-p1");
+          var oRetencion= this.getView().byId("id-select-retenciones");
+          var oIdRetencion= this.getView().byId("id-select-idretencion");
 
+          
+        },
+
+        onUploadCompleto: function() {
+        this.getView().byId("id-btn-upload").setVisible(true);
+        var MsgUpload =  this.getView().getModel("i18n").getResourceBundle().getText("msgcarga");
+          MessageToast.show(MsgUpload);
         },
   
   
@@ -60,7 +58,31 @@ sap.ui.define(
         },
   
         onFileupload: function() {
-          
+
+          var oPnlPadron=this.getView().byId("panel-padron"),
+            oPnlParametros = this.getView().byId("panel-parametros"),
+            oPadron=  this.getView().byId("id-select-padron"),
+            MsgSeleccion =  this.getView().getModel("i18n").getResourceBundle().getText("msgseleccion"),
+            MsgError =  this.getView().getModel("i18n").getResourceBundle().getText("msgerror");
+
+
+          var oFileUploader = this.byId("id-carga-fichero");
+          if (!oFileUploader.getValue()) {
+            MessageToast.show(MsgSeleccion);
+            return;
+          } else {
+           var oAddData =oPadron._getSelectedItemText();
+           oFileUploader.setAdditionalData(oAddData);
+          }
+          oFileUploader.checkFileReadable().then(function() {
+            oFileUploader.upload();
+          }, function(error) {
+            MessageToast.show(MsgError);
+          }).then(function() {
+            oFileUploader.clear();
+            oPnlPadron.setExpanded(false);    
+            oPnlParametros.setExpanded(true);
+          });
         },
   
         scrollFrom4to2: function () {
