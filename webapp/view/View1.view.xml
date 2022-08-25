@@ -35,10 +35,10 @@
 
                                             <VBox class="sapUiSmallMarginBegin" visible="false" id="id-file-upload">
                                                 <Label id="_IDGenLabel2" text="{i18n>fichero}" labelFor="id-carga-fichero" />
-                                                <u:FileUploader id="id-carga-fichero" uploadOnChange="false" 
+                                                <u:FileUploader id="id-carga-fichero" uploadOnChange="false"  uploadStart="onBeforeUploadStarts"
                                                     uploadUrl="/sap/opu/odata/sap/ZFIOD_IIBB_PADRON_UPLOAD_SRV/ArchivoSet" 
                                                     buttonText="{i18n>btnupload}" fileType="TXT" multiple="false"
-                                                    style="Emphasized" change="onUploadCompleto" placeholder="{i18n>fileselect}"  />
+                                                    style="Emphasized" change="onUploadFileChange" placeholder="{i18n>fileselect}"  />
                                             </VBox>
                                         </HBox>
 
