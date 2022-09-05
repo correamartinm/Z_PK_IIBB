@@ -35,14 +35,12 @@
 
                                             <VBox class="sapUiSmallMarginBegin" visible="false" id="id-file-upload">
                                                 <Label id="_IDGenLabel2" text="{i18n>fichero}" labelFor="id-carga-fichero" />
-                                                <u:FileUploader id="id-carga-fichero" uploadOnChange="false"  uploadStart="onBeforeUploadStarts"
-                                                    uploadUrl="/sap/opu/odata/sap/ZFIOD_IIBB_PADRON_UPLOAD_SRV/ArchivoSet" 
-                                                    buttonText="{i18n>btnupload}" fileType="TXT" multiple="false"
-                                                    style="Emphasized" change="onUploadFileChange" placeholder="{i18n>fileselect}"  />
+                                                <u:FileUploader id="id-carga-fichero" buttonText="{i18n>btnupload}" change="onUploadChange"
+                                                    style="Emphasized"  placeholder="{i18n>fileselect}" multiple="false" fileType="txt" />
+                                               <!--  <Button text="{i18n>upload}" id="id-btn-upload" class="sapUiSmallMarginTop" visible="true" press="onUploadFileChange" /> -->
                                             </VBox>
                                         </HBox>
 
-                                        <Button text="{i18n>upload}" id="id-btn-upload" class="sapUiSmallMarginTop" visible="false" press="onFileupload" />
 
                                     </Panel>
 
@@ -77,7 +75,7 @@
 
                                         </HBox>
 
-                                        <Button text="{i18n>ejecutar}" id="id-btn-p1" class="sapUiSmallMarginTop" press="onEjecutar" />
+                                        <Button text="{i18n>ejecutar}" id="id-btn-p1" class="sapUiSmallMarginTop" press="onFileupload" />
                                     </Panel>
 
                                     <Panel id="id-pnl-resultado-p1" headerText="{i18n>resultado}" expandable="true" expanded="false" visible="true">
