@@ -49,7 +49,6 @@
                                                     uploadUrl="/sap/opu/odata/sap/ZFIOD_IIBB_PADRON_UPLOAD_SRV/ArchivoSet"
                                                     fileDeleted="onFileDeleted"
                                                     uploadButtonInvisible="true"
-                                                    uploadEnabled="false"
                                                     uploadComplete="onUploadComplete" 
                                                     beforeUploadStarts="onBeforeUploadStarts">
                                                     <items>
