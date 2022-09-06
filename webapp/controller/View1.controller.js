@@ -23,41 +23,101 @@ sap.ui.define(
 
       selectArchivoServer: function () {
         this.getView().byId("id-file-upload").setVisible(false);
+        this.getView().byId("id-file-uploadCollection").setVisible(true);
+        // this.getView().byId("id-btn-serverfile").setVisible(true);
+        
       },
 
       selectArchivoLocal: function () {
         this.getView().byId("id-file-upload").setVisible(true);
+        this.getView().byId("id-file-uploadCollection").setVisible(false);
+      //  this.getView().byId("id-btn-serverfile").setVisible(false);
       },
 
-      onEjecutar: function () {
-
-
-        var file = sap.ui.getCore()._file;
-        if(file && window.FileReader){  
-           var reader = new FileReader();  
-           var that = this;  
-           reader.onload = function(evn) {  
-             var strCSV= evn.target.result; //string in CSV 
-               alert(strCSV);
-             };
-           reader.readAsText(file);  
-         }
-      },
-
+        // Evento Seleccion de Ficheros
       onUploadChange: function (e) {
-        // this.getView().byId("id-btn-upload").setVisible(true);
-        sap.ui.getCore()._file = e.getParameter("files") && e.getParameter("files");
 
-        var MsgUpload = this.getView()
+        var oPnlPadron = this.getView().byId("panel-padron"),
+            oRbut = this.getView().byId("id-rbt-SelectArchivo"),
+            oPnlParametros = this.getView().byId("panel-parametros"),
+            MsgUpload = this.getView()
           .getModel("i18n")
           .getResourceBundle()
           .getText("msgcarga");
-        MessageToast.show(MsgUpload);
-        var oPnlPadron = this.getView().byId("panel-padron"),
-          oPnlParametros = this.getView().byId("panel-parametros");
-        oPnlPadron.setExpanded(false);  
-        oPnlParametros.setExpanded(true);
-      },
+          MessageToast.show(MsgUpload);
+
+          if (oRbut.getSelectedIndex() === 0 ) {
+
+           // Opcion fichero en Backend   
+
+          } else {
+            
+            oPnlPadron.setExpanded(false);  
+            oPnlParametros.setExpanded(true);
+          }
+          
+        },
+
+      onBackendFile: function () {
+
+      },  
+        
+      onFileupload: function () {
+
+          var oSociedad = this.getView().byId("id-sociedad-p1"),
+            oRetencion = this.getView().byId("id-select-retenciones"),
+            oIdRetencion = this.getView().byId("id-select-idretencion"),
+            oPadron = this.getView().byId("id-select-padron"),
+            oBundle = this.getView().getModel("i18n").getResourceBundle(),
+            MsgSeleccion = oBundle.getText("msgfichero"),
+            MsgSociedad = oBundle.getText("msgsociedad"),
+            MsgTpoRetencion = oBundle.getText("msgtporetencion"),
+            MsgIdRetencion = oBundle.getText("msgidretencion"),
+            oFileUploader = this.byId("id-carga-fichero"),
+            oFile = sap.ui.getCore()._file[0],
+            that = this;
+
+          if (!oSociedad.getSelectedKey()) {
+            MessageToast.show(MsgSociedad);
+            return;
+          }
+  
+          if (!oRetencion.getSelectedKey()) {
+            MessageToast.show(MsgTpoRetencion);
+            return;
+          }
+  
+          if (!oIdRetencion.getSelectedKey()) {
+            MessageToast.show(MsgIdRetencion);
+            return;
+          }
+  
+          if (!oFileUploader.getValue()) {
+            MessageToast.show(MsgSeleccion);
+            return;
+          } 
+  
+          this.filename = oFile.name;
+          this.filetype = oFile.type;
+          this.sociedad = oSociedad.getSelectedKey();
+          this.padron = oPadron.getSelectedKey();
+          this.idretencion = oIdRetencion.getSelectedKey();
+          this.retencion = oRetencion.getSelectedKey();
+  
+          var reader = new FileReader();
+   
+          reader.addEventListener("loadend", function(e) {        
+            that.onPostFile(
+              e.currentTarget.result,
+              that.padron,
+              that.sociedad,
+              that.idretencion,
+              that.retencion
+            );
+         });
+  
+          reader.readAsText(oFile);
+        },
 
       parametrosActivacion: function () {},
 
@@ -69,72 +129,20 @@ sap.ui.define(
         this.model.setProperty("/navApiEnabled", false);
       },
 
-      onFileupload: function () {
-        var oSociedad = this.getView().byId("id-sociedad-p1"),
-          oRetencion = this.getView().byId("id-select-retenciones"),
-          oIdRetencion = this.getView().byId("id-select-idretencion"),
-          oPnlPadron = this.getView().byId("panel-padron"),
-          oPnlParametros = this.getView().byId("panel-parametros"),
-          oPadron = this.getView().byId("id-select-padron"),
-          oBundle = this.getView().getModel("i18n").getResourceBundle(),
-          MsgSeleccion = oBundle.getText("msgfichero"),
-          MsgSociedad = oBundle.getText("msgsociedad"),
-          MsgTpoRetencion = oBundle.getText("msgtporetencion"),
-          MsgIdRetencion = oBundle.getText("msgidretencion"),
-          oFileUploader = this.byId("id-carga-fichero"),
-          oFile = sap.ui.getCore()._file[0],
-          that = this;
-
-          typeof oFile == "string"
-
-
-        if (!oSociedad.getSelectedKey()) {
-          MessageToast.show(MsgSociedad);
-          return;
-        }
-
-        if (!oRetencion.getSelectedKey()) {
-          MessageToast.show(MsgTpoRetencion);
-          return;
-        }
-
-        if (!oIdRetencion.getSelectedKey()) {
-          MessageToast.show(MsgIdRetencion);
-          return;
-        }
-
-        if (!oFileUploader.getValue()) {
-          MessageToast.show(MsgSeleccion);
-          return;
-        }
-
-
-        this.filename = oFile.name;
-        this.filetype = oFile.type;
-        this.sociedad = oSociedad.getSelectedKey();
-        this.padron = oPadron.getSelectedKey();
-        this.idretencion = oIdRetencion.getSelectedKey();
-        this.retencion = oRetencion.getSelectedKey();
-
-        var reader = new FileReader();
-
-
-        reader.addEventListener("loadend", function(e) {        
-          that.onPostFile(
-            e.currentTarget.result,
-            that.padron,
-            that.sociedad,
-            that.idretencion,
-            that.retencion
-          );
-       });
-
-        reader.readAsText(oFile);
-      },
-
+      // Carga el Fichero Local FILEUPLOADER
       onPostFile: function (odataFile, oPad, oSoc, oIdRet, oRet) {
-        this.getView().setBusy(true);
 
+        var MsgCargado = this.getView()
+        .getModel("i18n")
+        .getResourceBundle()
+        .getText("msgresultado");
+
+        
+        var oPnlParametros = this.getView().byId("panel-parametros"),
+        oPnlResultado = this.getView().byId("id-pnl-resultado-p1");
+        
+        this.getView().setBusy(true);
+        
         var oPost = {
           Archivo_Valor: odataFile,
           Padron_Id: oPad,
@@ -142,12 +150,18 @@ sap.ui.define(
           Indicador_Ret: oIdRet,
           Tipo_Retencion: oRet,
         };
-
+        
         this.getView()
-          .getModel()
-          .create("/ArchivoSet", oPost, {
-            success: jQuery.proxy(function (oData) {
-              this.getView().setBusy(false);
+        .getModel()
+        .create("/ArchivoSet", oPost, {
+          success: jQuery.proxy(function (oData) {
+            this.getView().setBusy(false);
+            
+                MessageToast.show(MsgCargado);
+                oPnlParametros.setExpanded(false);
+                oPnlResultado.setExpanded(true);
+                oPnlResultado.setVisible(true);  
+
             }, this),
             error: function (data) {
               this.getView().setBusy(false);
@@ -250,6 +264,166 @@ sap.ui.define(
         };
         clearContent(this._wizard.getSteps());
       },
+
+      	//  Upload Files --------------------------------------------------
+
+		onEditaFile: function(oEvent) {
+
+			var oControl = oEvent.getSource(),
+				oTable = this.getView().byId("idTableIntervenciones").getSelectedItem(),
+				oNumInt;
+
+			if (!oTable) {
+				MessageToast.show("Seleccione un Item de la Tabla");
+				return;
+
+			} else {
+				var oRuta = oTable.getBindingContextPath();
+
+				if (!this._oDialogEditaIntervencion) {
+					this._oDialogEditaIntervencion = sap.ui.xmlfragment("AltaIntervencion", "AluarFichas.fragment.EditaFileUploader", this);
+					this.getView().addDependent(this._oDialogEditaIntervencion);
+				}
+				this._oDialogEditaIntervencion.bindElement(oRuta);
+			}
+
+			gDivision = this.byId("detailview").getBindingContext().getProperty("Division");
+			gSubDivision = this.byId("detailview").getBindingContext().getProperty("Sub_division");
+
+			oNumInt = oTable.getBindingContext().getProperty("Num_Interv");
+			var oUploadCollection = sap.ui.core.Fragment.byId("AltaIntervencion", "UploadCollectionMD");
+			var oFilter2 = new Filter("Nro_Ficha", FilterOperator.EQ, gOrder);
+			var oFilter3 = new Filter("Num_Interv", FilterOperator.EQ, oNumInt);
+
+			this._oDialogEditaIntervencion.setTitle("Ficheros Ficha: " + gOrder + " Intervencion: " + oNumInt);
+
+			oUploadCollection.getBinding("items").filter([oFilter2, oFilter3]);
+
+			gNumIntervencion = oNumInt;
+
+			this._oDialogEditaIntervencion.open();
+
+		},
+
+
+		onChange: function(oEvent) {
+			var oUploadCollection = oEvent.getSource();
+
+			var oCustomerHeaderToken = new UploadCollectionParameter({
+				name: "x-csrf-token",
+				value: this.getView().getModel().getSecurityToken()
+			});
+			oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+
+		},
+
+		onFileDeleted: function(oEvent) {
+
+			var oUploadCollection = this.getView().byId("UploadCollection"),
+				that = this;
+			var oItem = oUploadCollection.getSelectedItem();
+			var oModel = this.getView().getModel();
+			var sPath = oItem.getBindingContext().getPath();
+
+			MessageBox.warning(
+				oItem.getFileName(), {
+					icon: MessageBox.Icon.WARNING,
+					title: "Eliminar Fichero",
+					actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+					emphasizedAction: MessageBox.Action.CANCEL,
+					initialFocus: MessageBox.Action.CANCEL,
+					onClose: function(sAction) {
+						if (sAction === "OK") {
+							oModel.remove(sPath, {
+								success: function() {
+									oUploadCollection.getBinding("items").refresh();
+									sap.ui.core.Fragment.byId("AltaIntervencion", "downloadButton").setEnabled(false);
+									sap.ui.core.Fragment.byId("AltaIntervencion", "deleteButton").setEnabled(false);
+
+								},
+								error: function(data) {
+
+									var oData = JSON.parse(data.responseText);
+									var oText = oData.error.message.value;
+
+									sap.ui.define(["sap/m/MessageBox"], function(MessageBox) {
+										MessageBox.show(
+											oText, {
+												icon: MessageBox.Icon.ERROR,
+												title: that.i18nBundle.getText("changeerror")
+											}
+										);
+									});
+								}
+
+							});
+
+						}
+
+					}
+				}
+			);
+
+		},
+
+		onFilenameLengthExceed: function(oEvent) {
+			MessageToast.show("El nombre del Fichero supera el Limite Permitido ");
+		},
+
+		onFileSizeExceed: function(oEvent) {
+			MessageToast.show("El fichero supera el Limite permitido");
+		},
+
+		onTypeMissmatch: function(oEvent) {
+			MessageToast.show("Tipo de Fichero no permitido");
+		},
+
+		onFilePress: function(oEvent) {
+
+		},
+
+		onDownloadItem: function(oEvent) {
+
+			var oUploadCollection = this.getView().byId("UploadCollection"),
+				oItem = oUploadCollection.getSelectedItem(),
+				oFilename = oItem.getFileName(),
+				sPath = oItem.getBindingContext().getPath(),
+				oFile = window.document.createElement("a");
+
+			oFile.href = "/sap/opu/odata/sap/ZFIOD_IIBB_PADRON_UPLOAD_SRV" + sPath + "/$value";
+			oFile.download = oFilename;
+			document.body.appendChild(oFile);
+			oFile.click();
+			document.body.removeChild(oFile);
+
+		},
+
+		onBeforeUploadStarts: function(oEvent) {
+			var fileName = oEvent.getParameter("fileName");
+			// Header Slug
+			var oCustomerHeaderSlug = new UploadCollectionParameter({
+				name: "slug",
+				value: gOrder + ";" + gNumIntervencion + ";" + fileName
+			});
+			var oUploadCollection = oEvent.getSource();
+			oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
+		},
+
+		onUploadComplete: function(oEvent) {
+			var oUploadCollection = oEvent.getSource();
+			oUploadCollection.getBinding("items").refresh();
+			MessageToast.show("Upload Completado");
+		},
+
+		onSelectionChange: function(oEvent) {
+			var oUploadCollection = oEvent.getSource();
+
+		},
+
+		onSelectChange: function(oEvent) {
+			var oUploadCollection = oEvent.getSource();
+			oUploadCollection.setShowSeparators(oEvent.getParameters().selectedItem.getProperty("key"));
+		}
     });
   }
 );
