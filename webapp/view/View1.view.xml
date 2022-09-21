@@ -12,16 +12,25 @@
                 <pages>
                     <Page id="wizardContentPage" showHeader="false">
                         <content>
-                            <Wizard id="CreateProductWizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content" complete="wizardCompletedHandler">
+                            <Wizard id="CreateProductWizard" 
+                                    class="sapUiResponsivePadding--header sapUiResponsivePadding--content" 
+                                    complete="wizardCompletedHandler">
 
-                                <WizardStep id="carga_fichero" title="{i18n>step1}" validated="true">
+                                <WizardStep id="carga_fichero" 
+                                            title="{i18n>step1}" 
+                                            validated="true">
                                     
                                     <Panel id="panel-padron" expandable="true" expanded="true" headerText="{i18n>padronfichero}">
                                         <HBox id="_IDGenHBox1" width="100%" alignItems="Center">
+                                            
 
                                             <VBox id="_IDGenVBox1" alignItems="Start">
+                                                                                               
                                                 <Label id="_IDGenLabel1" text="{i18n>padron}" width="120px" labelFor="id-select-padron" />
-                                                <Select id="id-select-padron" width="250px" change="onSelectPadron" items="{/PadronSet}">
+                                                <Select id="id-select-padron" 
+                                                        width="250px" 
+                                                        change="onSelectPadron" 
+                                                        items="{/PadronSet}">
                                                     <core:Item id="_IDGenItem1" key="{Padron_Id}" text="{Padron_Id} {Descripcion}" />
                                                 </Select>
 
@@ -29,8 +38,8 @@
 
                                             <HBox id="_IDGenHBox2" class="sapUiSmallMarginBegin">
                                                 <RadioButtonGroup id="id-rbt-SelectArchivo" width="120px" selectedIndex="1">
-                                                    <RadioButton id="_IDGenRadioButton1" text="{i18n>servidor}" select=".selectArchivoServer" />
-                                                    <RadioButton id="_IDGenRadioButton2" text="{i18n>local}" select=".selectArchivoLocal"/>
+                                                    <RadioButton id="idRButton1" text="{i18n>servidor}"  select=".selectArchivoServer" />
+                                                    <RadioButton id="idRButton2" text="{i18n>local}" select=".selectArchivoLocal"/>
                                                 </RadioButtonGroup>
                                             </HBox>
 
@@ -64,10 +73,7 @@
                                         
                                             </VBox>
 
-                                            
-
-
-
+            
                                         <Button text="{i18n>upload}"  id="id-btn-serverfile" class="sapUiSmallMarginTop" visible="false" press="onUploadChange" />
 
 
@@ -206,7 +212,10 @@
                                     </Panel>
 
                                 </WizardStep>
-                                <WizardStep id="actualiza_padron" validated="true" title="{i18n>step2}">
+                                <WizardStep id="actualiza_padron" 
+                                            validated="true" 
+                                            title="{i18n>step2}">
+
                                     <Panel id="_IDGenPanel1">
 
                                         <VBox id="_IDGenHBox4">
@@ -244,27 +253,40 @@
                                     </Panel>
 
                                 </WizardStep>
-                                <WizardStep id="actualiza_partida" validated="false" activate="parametrosActivacion" title="{i18n>step3}">
+                                <WizardStep id="actualiza_partida" 
+                                            validated="false" 
+                                            activate="parametrosActivacion" 
+                                            title="{i18n>step3}">
                                     <Panel id="_IDGenPanel2">
 
                                         <VBox id="_IDGenHBox5">
 
                                             <VBox id="_IDGenVBox7" alignItems="Start">
-                                                <Label id="_IDGenLabel22" text="{i18n>sociedad}" width="120px" />
-                                                <Select id="id-mcb-sociedad-p3" width="200px" change="onSelectSociedad" items="{
-                                                    path: '/Proveedor',
-                                                    sorter: { path: 'Name' }
-                                                }">
+                                                <Label id="_IDGenLabel22" 
+                                                       text="{i18n>sociedad}" 
+                                                       width="120px" />
+                                                <Select id="id-mcb-sociedad-p3" 
+                                                        width="200px" 
+                                                        change="onSelectSociedad" 
+                                                        items="{
+                                                            path: '/Proveedor',
+                                                            sorter: { path: 'Name' }
+                                                        }">
                                                     <core:Item id="_IDGenItem7" key="{ProductId}" text="{Name}" />
                                                 </Select>
                                             </VBox>
 
                                             <VBox id="_IDGenVBox8" alignItems="Start" class="sapUiTinyMarginTop">
-                                                <Label id="_IDGenLabel23" text="{i18n>proveedor}" width="120px" />
-                                                <Select id="id-mcb-proveedor-p3" width="200px" change="onSelectProveedor" items="{
-                                                    path: '/Proveedor',
-                                                    sorter: { path: 'Name' }
-                                                }">
+                                                <Label id="_IDGenLabel23" 
+                                                       text="{i18n>proveedor}" 
+                                                       width="120px" />
+                                                <Select id="id-mcb-proveedor-p3" 
+                                                        width="200px" 
+                                                        change="onSelectProveedor" 
+                                                        items="{
+                                                            path: '/Proveedor',
+                                                            sorter: { path: 'Name' }
+                                                        }">
                                                     <core:Item id="_IDGenItem8" key="{ProductId}" text="{Name}" />
                                                 </Select>
 

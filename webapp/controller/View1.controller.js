@@ -13,31 +13,27 @@ sap.ui.define(
         this._wizard = this.byId("CreateProductWizard");
         this._oNavContainer = this.byId("wizardNavContainer");
         this._oWizardContentPage = this.byId("wizardContentPage");
-        this._i18nObundle =   this.getView().getModel("i18n").getResourceBundle();
+        this._oradioButton = this.getView().byId("id-rbt-SelectArchivo");        
       },
-
+      
+      
+      onAfterRendering : function() {
+        
+      },
+      
+      
       // Eventos del Radiobutton
-
-      onSelectPadron: function () {
-        this.getView().byId("SelectArchivo").setEnabled(true);
-      },
 
       selectArchivoServer: function () {
         this.getView().byId("id-file-upload").setVisible(false);
         this.getView().byId("id-file-uploadCollection").setVisible(true);
-        // this.getView().byId("id-btn-serverfile").setVisible(true);
-        
       },
 
       selectArchivoLocal: function () {
         this.getView().byId("id-file-upload").setVisible(true);
         this.getView().byId("id-file-uploadCollection").setVisible(false);
-      //  this.getView().byId("id-btn-serverfile").setVisible(false);
       },
 
-      
-      parametrosActivacion: function () {},
-      
       tablaActivacion: function () {
         this.model.setProperty("/navApiEnabled", true);
       },
@@ -46,186 +42,180 @@ sap.ui.define(
         this.model.setProperty("/navApiEnabled", false);
       },
 
-    // Pasos Wizard
+      // Pasos Wizard
 
-    scrollFrom4to2: function () {
-      this._wizard.goToStep(this.byId("origenArchivo_2"));
-    },
+      scrollFrom4to2: function () {
+        this._wizard.goToStep(this.byId("origenArchivo_2"));
+      },
 
-    goFrom4to3: function () {
-      if (this._wizard.getProgressStep() === this.byId("Tabla_4")) {
-        this._wizard.previousStep();
-      }
-    },
-
-    goFrom4to5: function () {
-      if (this._wizard.getProgressStep() === this.byId("Tabla_4")) {
-        this._wizard.nextStep();
-      }
-    },
-
-    wizardCompletedHandler: function () {
-      this._oNavContainer.to(this.byId("wizardReviewPage"));
-    },
-
-    backToWizardContent: function () {
-      this._oNavContainer.backToPage(this._oWizardContentPage.getId());
-    },
-
-    editStepOne: function () {
-      this._handleNavigationToStep(0);
-    },
-
-    editStepTwo: function () {
-      this._handleNavigationToStep(1);
-    },
-
-    editStepThree: function () {
-      this._handleNavigationToStep(2);
-    },
-
-    _handleNavigationToStep: function (iStepNumber) {
-      var fnAfterNavigate = function () {
-        this._wizard.goToStep(this._wizard.getSteps()[iStepNumber]);
-        this._oNavContainer.detachAfterNavigate(fnAfterNavigate);
-      }.bind(this);
-
-      this._oNavContainer.attachAfterNavigate(fnAfterNavigate);
-      this.backToWizardContent();
-    },
-
-    _handleMessageBoxOpen: function (sMessage, sMessageBoxType) {
-      MessageBox[sMessageBoxType](sMessage, {
-        actions: [MessageBox.Action.YES, MessageBox.Action.NO],
-        onClose: function (oAction) {
-          if (oAction === MessageBox.Action.YES) {
-            this._handleNavigationToStep(0);
-            this._wizard.discardProgress(this._wizard.getSteps()[0]);
-          }
-        }.bind(this),
-      });
-    },
-
-    handleWizardCancel: function () {
-      this._handleMessageBoxOpen(
-        "Are you sure you want to cancel your report?",
-        "warning"
-      );
-    },
-
-    handleWizardSubmit: function () {
-      this._handleMessageBoxOpen(
-        "Are you sure you want to submit your report?",
-        "confirm"
-      );
-    },
-
-    discardProgress: function () {
-      this._wizard.discardProgress(this.byId("Parametros_1"));
-
-      var clearContent = function (content) {
-        for (var i = 0; i < content.length; i++) {
-          if (content[i].setValue) {
-            content[i].setValue("");
-          }
-
-          if (content[i].getContent) {
-            clearContent(content[i].getContent());
-          }
+      goFrom4to3: function () {
+        if (this._wizard.getProgressStep() === this.byId("Tabla_4")) {
+          this._wizard.previousStep();
         }
-      };
-      clearContent(this._wizard.getSteps());
-    },
+      },
 
-      
+      goFrom4to5: function () {
+        if (this._wizard.getProgressStep() === this.byId("Tabla_4")) {
+          this._wizard.nextStep();
+        }
+      },
+
+      wizardCompletedHandler: function () {
+        this._oNavContainer.to(this.byId("wizardReviewPage"));
+      },
+
+      backToWizardContent: function () {
+        this._oNavContainer.backToPage(this._oWizardContentPage.getId());
+      },
+
+      editStepOne: function () {
+        this._handleNavigationToStep(0);
+      },
+
+      editStepTwo: function () {
+        this._handleNavigationToStep(1);
+      },
+
+      editStepThree: function () {
+        this._handleNavigationToStep(2);
+      },
+
+      _handleNavigationToStep: function (iStepNumber) {
+        var fnAfterNavigate = function () {
+          this._wizard.goToStep(this._wizard.getSteps()[iStepNumber]);
+          this._oNavContainer.detachAfterNavigate(fnAfterNavigate);
+        }.bind(this);
+
+        this._oNavContainer.attachAfterNavigate(fnAfterNavigate);
+        this.backToWizardContent();
+      },
+
+      _handleMessageBoxOpen: function (sMessage, sMessageBoxType) {
+        MessageBox[sMessageBoxType](sMessage, {
+          actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+          onClose: function (oAction) {
+            if (oAction === MessageBox.Action.YES) {
+              this._handleNavigationToStep(0);
+              this._wizard.discardProgress(this._wizard.getSteps()[0]);
+            }
+          }.bind(this),
+        });
+      },
+
+      handleWizardCancel: function () {
+        this._handleMessageBoxOpen(
+          "Are you sure you want to cancel your report?",
+          "warning"
+        );
+      },
+
+      handleWizardSubmit: function () {
+        this._handleMessageBoxOpen(
+          "Are you sure you want to submit your report?",
+          "confirm"
+        );
+      },
+
+      discardProgress: function () {
+        this._wizard.discardProgress(this.byId("Parametros_1"));
+
+        var clearContent = function (content) {
+          for (var i = 0; i < content.length; i++) {
+            if (content[i].setValue) {
+              content[i].setValue("");
+            }
+
+            if (content[i].getContent) {
+              clearContent(content[i].getContent());
+            }
+          }
+        };
+        clearContent(this._wizard.getSteps());
+      },
+
       // Evento Seleccion de Ficheros FILEUPLOADER
 
-    onUploadChange: function (e) {
-
-      var oPnlPadron = this.getView().byId("panel-padron"),
+      onUploadChange: function (e) {
+        var oPnlPadron = this.getView().byId("panel-padron"),
+          i18nObundle = this.getView().getModel("i18n").getResourceBundle(),
           oRbut = this.getView().byId("id-rbt-SelectArchivo"),
           oPnlParametros = this.getView().byId("panel-parametros"),
-          MsgUpload = this._i18nthis._i18nObundle.getText("msgcarga");
+          MsgUpload = i18nObundle.getText("msgcarga");
         MessageToast.show(MsgUpload);
 
-        if (oRbut.getSelectedIndex() === 0 ) {
-
-         // Opcion fichero en Backend   
-
+        if (oRbut.getSelectedIndex() === 0) {
+          // Opcion fichero en Backend
         } else {
-          
-          oPnlPadron.setExpanded(false);  
+          oPnlPadron.setExpanded(false);
           oPnlParametros.setExpanded(true);
         }
-        
       },
-      
-    onFileupload: function () {
-      
-      var oSociedad = this.getView().byId("id-sociedad-p1"),
-      oRetencion = this.getView().byId("id-select-retenciones"),
-      oIdRetencion = this.getView().byId("id-select-idretencion"),
-      oPadron = this.getView().byId("id-select-padron"),
-      MsgSeleccion = this._i18nObundle.getText("msgfichero"),
-      MsgSociedad = this._i18nObundle.getText("msgsociedad"),
-      MsgTpoRetencion = this._i18nObundle.getText("msgtporetencion"),
-      MsgIdRetencion = this._i18nObundle.getText("msgidretencion"),
-      oFileUploader = this.byId("id-carga-fichero"),
-      oFile = sap.ui.getCore()._file[0],
-      that = this;
-      
-          if (!oSociedad.getSelectedKey()) {
-            MessageToast.show(MsgSociedad);
-            return;
-          }
-  
-          if (!oRetencion.getSelectedKey()) {
-            MessageToast.show(MsgTpoRetencion);
-            return;
-          }
-  
-          if (!oIdRetencion.getSelectedKey()) {
-            MessageToast.show(MsgIdRetencion);
-            return;
-          }
-  
-          if (!oFileUploader.getValue()) {
-            MessageToast.show(MsgSeleccion);
-            return;
-          } 
-  
-          this.filename = oFile.name;
-          this.filetype = oFile.type;
-          this.sociedad = oSociedad.getSelectedKey();
-          this.padron = oPadron.getSelectedKey();
-          this.idretencion = oIdRetencion.getSelectedKey();
-          this.retencion = oRetencion.getSelectedKey();
-  
-          var reader = new FileReader();
-   
-          reader.addEventListener("loadend", function(e) {        
-            that.onPostFile(
-              e.currentTarget.result,
-              that.padron,
-              that.sociedad,
-              that.idretencion,
-              that.retencion
-            );
-         });
-  
-          reader.readAsText(oFile);
-        },
+
+      onFileupload: function () {
+        var oSociedad = this.getView().byId("id-sociedad-p1"),
+          i18nObundle = this.getView().getModel("i18n").getResourceBundle(),
+          oRetencion = this.getView().byId("id-select-retenciones"),
+          oIdRetencion = this.getView().byId("id-select-idretencion"),
+          oPadron = this.getView().byId("id-select-padron"),
+          MsgSeleccion = i18nObundle.getText("msgfichero"),
+          MsgSociedad = i18nObundle.getText("msgsociedad"),
+          MsgTpoRetencion = i18nObundle.getText("msgtporetencion"),
+          MsgIdRetencion = i18nObundle.getText("msgidretencion"),
+          oFileUploader = this.byId("id-carga-fichero"),
+          oFile = sap.ui.getCore()._file[0],
+          that = this;
+
+        if (!oSociedad.getSelectedKey()) {
+          MessageToast.show(MsgSociedad);
+          return;
+        }
+
+        if (!oRetencion.getSelectedKey()) {
+          MessageToast.show(MsgTpoRetencion);
+          return;
+        }
+
+        if (!oIdRetencion.getSelectedKey()) {
+          MessageToast.show(MsgIdRetencion);
+          return;
+        }
+
+        if (!oFileUploader.getValue()) {
+          MessageToast.show(MsgSeleccion);
+          return;
+        }
+
+        this.filename = oFile.name;
+        this.filetype = oFile.type;
+        this.sociedad = oSociedad.getSelectedKey();
+        this.padron = oPadron.getSelectedKey();
+        this.idretencion = oIdRetencion.getSelectedKey();
+        this.retencion = oRetencion.getSelectedKey();
+
+        var reader = new FileReader();
+
+        reader.addEventListener("loadend", function (e) {
+          that.onPostFile(
+            e.currentTarget.result,
+            that.padron,
+            that.sociedad,
+            that.idretencion,
+            that.retencion
+          );
+        });
+
+        reader.readAsText(oFile);
+      },
 
       // Carga el Fichero Local FILEUPLOADER
 
       onPostFile: function (odataFile, oPad, oSoc, oIdRet, oRet) {
+        var MsgCargado = i18nObundle.getText("msgresultado"),
+          oPnlParametros = this.getView().byId("panel-parametros"),
+          oPnlResultado = this.getView().byId("id-pnl-resultado-p1");
 
-        var MsgCargado = this._i18nObundle.getText("msgresultado"),
-            oPnlParametros = this.getView().byId("panel-parametros"),
-            oPnlResultado = this.getView().byId("id-pnl-resultado-p1");
-        
         this.getView().setBusy(true);
-        
+
         var oPost = {
           Archivo_Valor: odataFile,
           Padron_Id: oPad,
@@ -233,18 +223,17 @@ sap.ui.define(
           Indicador_Ret: oIdRet,
           Tipo_Retencion: oRet,
         };
-        
-        this.getView()
-        .getModel()
-        .create("/ArchivoSet", oPost, {
-          success: jQuery.proxy(function (oData) {
-            this.getView().setBusy(false);
-            
-                MessageToast.show(MsgCargado);
-                oPnlParametros.setExpanded(false);
-                oPnlResultado.setExpanded(true);
-                oPnlResultado.setVisible(true);  
 
+        this.getView()
+          .getModel()
+          .create("/ArchivoSet", oPost, {
+            success: jQuery.proxy(function (oData) {
+              this.getView().setBusy(false);
+
+              MessageToast.show(MsgCargado);
+              oPnlParametros.setExpanded(false);
+              oPnlResultado.setExpanded(true);
+              oPnlResultado.setVisible(true);
             }, this),
             error: function (data) {
               this.getView().setBusy(false);
@@ -257,155 +246,143 @@ sap.ui.define(
             },
           });
       },
-  
 
+      //  Upload Files
 
+      onEditaFile: function (oEvent) {
+        var oControl = oEvent.getSource(),
+          oNumInt;
 
-      	//  Upload Files  
+        gDivision = this.byId("detailview")
+          .getBindingContext()
+          .getProperty("Division");
 
-		onEditaFile: function(oEvent) {
+        oNumInt = oTable.getBindingContext().getProperty("Num_Interv");
+        var oUploadCollection = sap.ui.core.Fragment.byId(
+          "AltaIntervencion",
+          "UploadCollectionMD"
+        );
+        var oFilter2 = new Filter("Nro_Ficha", FilterOperator.EQ, gOrder);
 
-			var oControl = oEvent.getSource(),
-				oNumInt;
-						
+        oUploadCollection.getBinding("items").filter([oFilter2, oFilter3]);
 
-			gDivision = this.byId("detailview").getBindingContext().getProperty("Division");
+        gNumIntervencion = oNumInt;
+      },
 
+      onChange: function (oEvent) {
+        var oUploadCollection = oEvent.getSource();
 
-			oNumInt = oTable.getBindingContext().getProperty("Num_Interv");
-			var oUploadCollection = sap.ui.core.Fragment.byId("AltaIntervencion", "UploadCollectionMD");
-			var oFilter2 = new Filter("Nro_Ficha", FilterOperator.EQ, gOrder);
+        var oCustomerHeaderToken = new UploadCollectionParameter({
+          name: "x-csrf-token",
+          value: this.getView().getModel().getSecurityToken(),
+        });
+        oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+      },
 
+      onFileDeleted: function (oEvent) {
+        var oUploadCollection = this.getView().byId("UploadCollection"),
+          that = this;
+        var oItem = oUploadCollection.getSelectedItem();
+        var oModel = this.getView().getModel();
+        var sPath = oItem.getBindingContext().getPath();
 
-			oUploadCollection.getBinding("items").filter([oFilter2, oFilter3]);
+        MessageBox.warning(oItem.getFileName(), {
+          icon: MessageBox.Icon.WARNING,
+          title: "Eliminar Fichero",
+          actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+          emphasizedAction: MessageBox.Action.CANCEL,
+          initialFocus: MessageBox.Action.CANCEL,
+          onClose: function (sAction) {
+            if (sAction === "OK") {
+              oModel.remove(sPath, {
+                success: function () {
+                  oUploadCollection.getBinding("items").refresh();
+                  sap.ui.core.Fragment.byId(
+                    "AltaIntervencion",
+                    "downloadButton"
+                  ).setEnabled(false);
+                  sap.ui.core.Fragment.byId(
+                    "AltaIntervencion",
+                    "deleteButton"
+                  ).setEnabled(false);
+                },
+                error: function (data) {
+                  var oData = JSON.parse(data.responseText);
+                  var oText = oData.error.message.value;
 
-			gNumIntervencion = oNumInt;
+                  sap.ui.define(["sap/m/MessageBox"], function (MessageBox) {
+                    MessageBox.show(oText, {
+                      icon: MessageBox.Icon.ERROR,
+                      title: that.i18nBundle.getText("changeerror"),
+                    });
+                  });
+                },
+              });
+            }
+          },
+        });
+      },
 
-			
+      onFilenameLengthExceed: function (oEvent) {
+        var i18nObundle = this.getView().getModel("i18n").getResourceBundle();
+        MessageToast.show(i18nObundle.getText("msgfilename"));
+      },
 
-		},
+      onFileSizeExceed: function (oEvent) {
+        var i18nObundle = this.getView().getModel("i18n").getResourceBundle();
+        MessageToast.show(i18nObundle.getText("msgfilesize"));
+      },
 
+      onTypeMissmatch: function (oEvent) {
+        var i18nObundle = this.getView().getModel("i18n").getResourceBundle();
+        MessageToast.show(i18nObundle.getText("msgtype"));
+      },
 
-		onChange: function(oEvent) {
-			var oUploadCollection = oEvent.getSource();
+      onFilePress: function (oEvent) {},
 
-			var oCustomerHeaderToken = new UploadCollectionParameter({
-				name: "x-csrf-token",
-				value: this.getView().getModel().getSecurityToken()
-			});
-			oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+      onDownloadItem: function (oEvent) {
+        var oUploadCollection = this.getView().byId("UploadCollection"),
+          oItem = oUploadCollection.getSelectedItem(),
+          oFilename = oItem.getFileName(),
+          sPath = oItem.getBindingContext().getPath(),
+          oFile = window.document.createElement("a");
 
-		},
+        oFile.href =
+          "/sap/opu/odata/sap/ZFIOD_IIBB_PADRON_UPLOAD_SRV" + sPath + "/$value";
+        oFile.download = oFilename;
+        document.body.appendChild(oFile);
+        oFile.click();
+        document.body.removeChild(oFile);
+      },
 
-		onFileDeleted: function(oEvent) {
+      onBeforeUploadStarts: function (oEvent) {
+        var fileName = oEvent.getParameter("fileName");
+        // Header Slug  MODIFICAR!!!!!!!!
 
-			var oUploadCollection = this.getView().byId("UploadCollection"),
-				that = this;
-			var oItem = oUploadCollection.getSelectedItem();
-			var oModel = this.getView().getModel();
-			var sPath = oItem.getBindingContext().getPath();
+        var oCustomerHeaderSlug = new UploadCollectionParameter({
+          name: "slug",
+          value: gOrder + ";" + gNumIntervencion + ";" + fileName,
+        });
+        var oUploadCollection = oEvent.getSource();
+        oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
+      },
 
-			MessageBox.warning(
-				oItem.getFileName(), {
-					icon: MessageBox.Icon.WARNING,
-					title: "Eliminar Fichero",
-					actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-					emphasizedAction: MessageBox.Action.CANCEL,
-					initialFocus: MessageBox.Action.CANCEL,
-					onClose: function(sAction) {
-						if (sAction === "OK") {
-							oModel.remove(sPath, {
-								success: function() {
-									oUploadCollection.getBinding("items").refresh();
-									sap.ui.core.Fragment.byId("AltaIntervencion", "downloadButton").setEnabled(false);
-									sap.ui.core.Fragment.byId("AltaIntervencion", "deleteButton").setEnabled(false);
+      onUploadComplete: function (oEvent) {
+        var oUploadCollection = oEvent.getSource();
+        oUploadCollection.getBinding("items").refresh();
+        MessageToast.show("Upload Completado");
+      },
 
-								},
-								error: function(data) {
+      onSelectionChange: function (oEvent) {
+        var oUploadCollection = oEvent.getSource();
+      },
 
-									var oData = JSON.parse(data.responseText);
-									var oText = oData.error.message.value;
-
-									sap.ui.define(["sap/m/MessageBox"], function(MessageBox) {
-										MessageBox.show(
-											oText, {
-												icon: MessageBox.Icon.ERROR,
-												title: that.i18nBundle.getText("changeerror")
-											}
-										);
-									});
-								}
-
-							});
-
-						}
-
-					}
-				}
-			);
-
-		},
-
-		onFilenameLengthExceed: function(oEvent) {
-
-			MessageToast.show(this._i18nObundle.getText("msgfilename"));
-		},
-
-		onFileSizeExceed: function(oEvent) {
-			MessageToast.show(this._i18nObundle.getText("msgfilesize");
-		},
-
-		onTypeMissmatch: function(oEvent) {
-			MessageToast.show(this._i18nObundle.getText("msgtype");
-		},
-
-		onFilePress: function(oEvent) {
-
-		},
-
-		onDownloadItem: function(oEvent) {
-
-			var oUploadCollection = this.getView().byId("UploadCollection"),
-				oItem = oUploadCollection.getSelectedItem(),
-				oFilename = oItem.getFileName(),
-				sPath = oItem.getBindingContext().getPath(),
-				oFile = window.document.createElement("a");
-
-			oFile.href = "/sap/opu/odata/sap/ZFIOD_IIBB_PADRON_UPLOAD_SRV" + sPath + "/$value";
-			oFile.download = oFilename;
-			document.body.appendChild(oFile);
-			oFile.click();
-			document.body.removeChild(oFile);
-
-		},
-
-		onBeforeUploadStarts: function(oEvent) {
-			var fileName = oEvent.getParameter("fileName");
-			// Header Slug  MODIFICAR!!!!!!!!
-
-			var oCustomerHeaderSlug = new UploadCollectionParameter({
-				name: "slug",
-				value: gOrder + ";" + gNumIntervencion + ";" + fileName
-			});
-			var oUploadCollection = oEvent.getSource();
-			oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
-		},
-
-		onUploadComplete: function(oEvent) {
-			var oUploadCollection = oEvent.getSource();
-			oUploadCollection.getBinding("items").refresh();
-			MessageToast.show("Upload Completado");
-		},
-
-		onSelectionChange: function(oEvent) {
-			var oUploadCollection = oEvent.getSource();
-
-		},
-
-		onSelectChange: function(oEvent) {
-			var oUploadCollection = oEvent.getSource();
-			oUploadCollection.setShowSeparators(oEvent.getParameters().selectedItem.getProperty("key"));
-		}
+      onSelectChange: function (oEvent) {
+        var oUploadCollection = oEvent.getSource();
+        oUploadCollection.setShowSeparators(
+          oEvent.getParameters().selectedItem.getProperty("key")
+        );
+      },
     });
   }
 );
