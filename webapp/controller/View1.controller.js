@@ -15,13 +15,10 @@ sap.ui.define(
         this._oWizardContentPage = this.byId("wizardContentPage");
         this._oradioButton = this.getView().byId("id-rbt-SelectArchivo");        
       },
-      
-      
-      onAfterRendering : function() {
-        
+            
+      onAfterRendering : function() {    
       },
-      
-      
+            
       // Eventos del Radiobutton
 
       selectArchivoServer: function () {
@@ -208,7 +205,6 @@ sap.ui.define(
       },
 
       // Carga el Fichero Local FILEUPLOADER
-
       onPostFile: function (odataFile, oPad, oSoc, oIdRet, oRet) {
         var MsgCargado = i18nObundle.getText("msgresultado"),
           oPnlParametros = this.getView().byId("panel-parametros"),
