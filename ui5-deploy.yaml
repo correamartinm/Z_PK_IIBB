@@ -19,7 +19,7 @@ builder:
           auth: basic
         credentials:
           username: env:MCORREA
-          password: env:martu12345
+          password: env:Zaq11qaz
         app:
           name: ZPK_IIBB
           description: Actualizacion Padrones IIBB
